@@ -56,7 +56,7 @@ services:
     - ${PATH_DATA:-./.data}/redis:/data
 
   mariadb:
-    image: mariadb:10
+    image: mariadb:10.7.4
     restart: unless-stopped
     volumes:
       - ${PATH_DATA:-./.data}/mariadb:/var/lib/mysql
