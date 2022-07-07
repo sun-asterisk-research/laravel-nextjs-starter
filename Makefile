@@ -9,15 +9,19 @@ devup:
 	USER=$$(id -u):$$(id -g) docker compose up -d --remove-orphans
 
 devinstall:
-	@docker exec -it $(COMPOSE_PROJECT_NAME)-php-1 composer install
-	@docker exec -it $(COMPOSE_PROJECT_NAME)-node-1 yarn
+	@docker exec -it -u $$(id -u):$$(id -g) $(COMPOSE_PROJECT_NAME)-php-1 composer install
+	@docker exec -it -u $$(id -u):$$(id -g) $(COMPOSE_PROJECT_NAME)-node-1 yarn
 	@cd api && [ ! -f api/.env ] && cp .env.example .env && php artisan key:generate
+	@docker exec -it $(COMPOSE_PROJECT_NAME)-php-1 sh -c "chown -R :www-data storage/* bootstrap/cache"
 
 devrun:
-	docker exec -it $(COMPOSE_PROJECT_NAME)-node-1 yarn dev
+	docker exec -it -u $$(id -u):$$(id -g) $(COMPOSE_PROJECT_NAME)-node-1 yarn dev
 
 devmigrate:
-	docker exec -it $(COMPOSE_PROJECT_NAME)-php-1 php artisan migrate
+	USER=$$(id -u):$$(id -g) docker exec -it -u $$(id -u):$$(id -g) $(COMPOSE_PROJECT_NAME)-php-1 php artisan migrate
 
 devdown:
-	USER=$$(id -u):$$(id -g) docker compose down --remove-orphans
+	docker compose down --remove-orphans
+
+devclean: devdown
+	sudo rm -rf .data

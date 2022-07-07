@@ -26,14 +26,13 @@ services:
     image: ghcr.io/sun-asterisk-research/php-dev:8.1
     restart: unless-stopped
     working_dir: /srv/app
-    user: ${USER:-1000:1000}
     environment:
       DOCUMENT_ROOT: /srv/app/public
     volumes:
     - ./api:/srv/app
     labels:
     - traefik.enable=true
-    - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`${DOMAIN}`) && Path(`/api`)
+    - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
     - traefik.http.services.${COMPOSE_PROJECT_NAME}-api.loadbalancer.server.port=80
 
   node:
