@@ -23,10 +23,11 @@ make devup
 A `.env` file will be created in the project's root directory.
 You can customize development environment to your preferences by editing it.
 
-Install dependencies.
+Install dependencies and run migrations.
 
 ```sh
 make devinstall
+make devmigrate
 ```
 
 Start the web app in development mode.
