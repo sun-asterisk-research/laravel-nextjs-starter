@@ -14,6 +14,7 @@ devinstall:
 	@test -f api/.env || (cp api/.env.example api/.env && docker exec -it $(COMPOSE_PROJECT_NAME)-php-1 php artisan key:generate)
 	@test -f web/.env || cp web/.env.example web/.env
 	@docker exec -it $(COMPOSE_PROJECT_NAME)-php-1 sh -c "chown -R :www-data storage/* bootstrap/cache"
+	@test -d .vscode || (mkdir .vscode && echo '{ "eslint.workingDirectories": [ "web" ] }' > .vscode/settings.json)
 
 devrun:
 	docker exec -it -u $$(id -u):$$(id -g) $(COMPOSE_PROJECT_NAME)-node-1 yarn dev
