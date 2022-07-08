@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useContext } from 'react';
 
 import styles from '../styles/Home.module.css'
-import AuthContext from './contexts/AuthContext'
+import AuthContext from '../contexts/AuthContext'
 
 export default function Home() {
 
