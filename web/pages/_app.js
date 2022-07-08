@@ -1,8 +1,8 @@
 import App from 'next/app';
 import { useState } from 'react';
 
-import '../styles/globals.css'
-import AuthContext from '../contexts/AuthContext';
+import '~/styles/globals.css'
+import AuthContext from '~/contexts/AuthContext';
 
 NextApp.getInitialProps = async (ctx) => {
   // Is SSR
